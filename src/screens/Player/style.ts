@@ -12,9 +12,7 @@ export default StyleSheet.create({
   wrapperTitleAndAir: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '60%',
     width: '100%',
-    padding: 16,
   },
   onAir: {
     fontSize: 18,
@@ -53,7 +51,7 @@ export default StyleSheet.create({
   wrapperSocialMedia: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingVertical: 20,
+    paddingBottom: 20,
   },
   buttonSocial: {
     alignItems: 'center',
@@ -89,8 +87,11 @@ export default StyleSheet.create({
     backgroundColor: '#E67E22',
   },
   wrapperBanner: {
-    justifyContent: 'flex-end',
-    minHeight: 80,
+    backgroundColor: '#333',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
+    height: 110,
+    marginVertical: 30,
   },
 });

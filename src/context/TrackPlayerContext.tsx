@@ -92,7 +92,10 @@ export function TrackPlayerProvider({children}: PropsWithChildren) {
 
           return isWithinInterval(currentDate, {
             start: programStart,
-            end: programEnd,
+            end:
+              programEnd.getHours() === 5
+                ? parse('23:59', 'HH:mm', currentDate)
+                : programEnd,
           });
         }) as Program;
 

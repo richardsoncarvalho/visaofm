@@ -86,7 +86,17 @@ export function Player() {
             <Text style={styled.onAir}>Ao Vivo</Text>
             <Text style={styled.title}>{program?.title}</Text>
             <Text style={styled.subtitle}>{program?.announcer}</Text>
+            <Text style={styled.subtitle}>
+              dás {program?.start} ás {program?.end}
+            </Text>
           </View>
+        </View>
+
+        <View style={styled.wrapperBanner}>
+          <BannerAd
+            size={BannerAdSize.LARGE_BANNER}
+            unitId="ca-app-pub-9221395337754411/6963208724"
+          />
         </View>
 
         <View style={styled.wrapperSocialMedia}>
@@ -140,13 +150,6 @@ export function Player() {
             <Play />
           )}
         </TouchableOpacity>
-      </View>
-
-      <View style={styled.wrapperBanner}>
-        <BannerAd
-          size={BannerAdSize.ADAPTIVE_BANNER}
-          unitId="ca-app-pub-9221395337754411/6963208724"
-        />
       </View>
     </SafeAreaView>
   );
