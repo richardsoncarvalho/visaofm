@@ -92,15 +92,18 @@ export function TrackPlayerProvider({children}: PropsWithChildren) {
 
           return isWithinInterval(currentDate, {
             start: programStart,
-            end:
-              programEnd.getHours() === 5
-                ? parse('23:59', 'HH:mm', currentDate)
-                : programEnd,
+            end: programEnd,
           });
         }) as Program;
 
         setProgram(currentProgram);
-      } finally {
+      } catch (error) {
+        setProgram({
+          title: 'Programação Musical Automática',
+          announcer: 'Programação',
+          start: '00:00',
+          end: '05:00',
+        });
       }
     })();
   }, []);
@@ -112,11 +115,11 @@ export function TrackPlayerProvider({children}: PropsWithChildren) {
       }
 
       await TrackPlayer.updateMetadataForTrack(0, {
-        artist: program.announcer,
-        title: program.title,
+        artist: program?.announcer,
+        title: program?.title,
       });
     })();
-  }, [program.announcer, program.title, state]);
+  }, [program?.announcer, program?.title, state]);
 
   return (
     <TrackPlayerContext.Provider value={{program}}>

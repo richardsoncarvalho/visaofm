@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
+    backgroundColor: '#01012A',
     flex: 1,
   },
   wrapper: {
@@ -9,7 +10,6 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   wrapperTitleAndAir: {
-    backgroundColor: '#333',
     alignItems: 'center',
     justifyContent: 'center',
     height: '60%',
@@ -24,11 +24,10 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   wrapperLogo: {
-    backgroundColor: '#fff',
     borderRadius: 10,
-    height: 120,
+    height: 160,
     overflow: 'hidden',
-    width: 120,
+    width: 160,
     padding: 5,
   },
   logo: {

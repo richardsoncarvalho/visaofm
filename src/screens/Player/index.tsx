@@ -71,8 +71,6 @@ export function Player() {
     <SafeAreaView style={styled.container}>
       <View style={styled.wrapper}>
         <View style={styled.wrapperTitleAndAir}>
-          <Text style={styled.onAir}>Ao Vivo</Text>
-
           <View style={styled.wrapperLogo}>
             <Image
               source={{
@@ -85,6 +83,7 @@ export function Player() {
           </View>
 
           <View style={styled.wrapperContent}>
+            <Text style={styled.onAir}>Ao Vivo</Text>
             <Text style={styled.title}>{program?.title}</Text>
             <Text style={styled.subtitle}>{program?.announcer}</Text>
           </View>
