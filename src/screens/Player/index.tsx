@@ -97,11 +97,7 @@ export function Player() {
           <BannerAd
             size={BannerAdSize.LARGE_BANNER}
             unitId="ca-app-pub-9221395337754411/6963208724"
-            onAdFailedToLoad={error => {
-              console.log(error);
-
-              bannerRef.current?.loadAd();
-            }}
+            onAdFailedToLoad={error => bannerRef.current?.loadAd()}
             ref={bannerRef}
           />
         </View>
