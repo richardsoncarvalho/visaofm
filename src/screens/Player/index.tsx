@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -33,6 +33,7 @@ export function Player() {
   const [url, setUrl] = useState<string | null>(null);
   const {state} = usePlaybackState();
   const {program} = useTrackPlayer();
+  const bannerRef = useRef(null);
   const isPlaying = state === State.Playing;
   const isLoading = state === State.Buffering;
 
@@ -96,6 +97,12 @@ export function Player() {
           <BannerAd
             size={BannerAdSize.LARGE_BANNER}
             unitId="ca-app-pub-9221395337754411/6963208724"
+            onAdFailedToLoad={error => {
+              console.log(error);
+
+              bannerRef.current?.loadAd();
+            }}
+            ref={bannerRef}
           />
         </View>
 

@@ -1,4 +1,4 @@
-import {isWithinInterval, parse} from 'date-fns';
+import {parse} from 'date-fns';
 import {utcToZonedTime} from 'date-fns-tz';
 import React, {
   PropsWithChildren,
@@ -36,6 +36,21 @@ export const TrackPlayerContext = createContext<{program: Program}>({
   },
 });
 
+const setupPlayer = async (
+  options: Parameters<typeof TrackPlayer.setupPlayer>[0],
+) => {
+  const setup = async () => {
+    try {
+      await TrackPlayer.setupPlayer(options);
+    } catch (error) {
+      return (error as Error & {code?: string}).code;
+    }
+  };
+  while ((await setup()) === 'android_cannot_setup_player_in_background') {
+    await new Promise<void>(resolve => setTimeout(resolve, 1));
+  }
+};
+
 export function TrackPlayerProvider({children}: PropsWithChildren) {
   const {state} = usePlaybackState();
   const [program, setProgram] = useState<Program>({
@@ -46,7 +61,9 @@ export function TrackPlayerProvider({children}: PropsWithChildren) {
   });
 
   const initialize = useCallback(async () => {
-    await TrackPlayer.setupPlayer();
+    await setupPlayer({
+      autoHandleInterruptions: true,
+    });
     await TrackPlayer.updateOptions({
       android: {
         appKilledPlaybackBehavior: AppKilledPlaybackBehavior.ContinuePlayback,
@@ -54,6 +71,7 @@ export function TrackPlayerProvider({children}: PropsWithChildren) {
       capabilities: [Capability.Play, Capability.Stop],
       compactCapabilities: [Capability.Play, Capability.Stop],
     });
+    await TrackPlayer.reset();
     await TrackPlayer.add([track]);
     await TrackPlayer.play();
   }, []);
@@ -80,34 +98,24 @@ export function TrackPlayerProvider({children}: PropsWithChildren) {
 
   useEffect(() => {
     (async () => {
-      try {
-        const scredule = await fetch(
-          'https://visao87fm.com.br/programacao.json',
+      const scredule = await fetch('https://visao87fm.com.br/programacao.json');
+      const response = (await scredule.json()) as {[key: number]: Program[]};
+      const currentDate = utcToZonedTime(new Date(), 'America/Sao_Paulo');
+
+      const currentProgram = response[currentDate.getDay()].find(schedule => {
+        const programStart = parse(schedule.start, 'HH:mm', currentDate);
+        const programEnd = parse(schedule.end, 'HH:mm', currentDate);
+
+        return (
+          currentDate >= programStart &&
+          currentDate <=
+            (programEnd.getHours() === 0
+              ? parse('23:59', 'HH:mm', currentDate)
+              : programEnd)
         );
-        const response = (await scredule.json()) as {[key: number]: Program[]};
-        const currentDate = utcToZonedTime(new Date(), 'America/Sao_Paulo');
-        const currentProgram = response[currentDate.getDay()].find(schedule => {
-          const programStart = parse(schedule.start, 'HH:mm', currentDate);
-          const programEnd = parse(schedule.end, 'HH:mm', currentDate);
+      }) as Program;
 
-          return isWithinInterval(currentDate, {
-            start: programStart,
-            end:
-              programEnd.getHours() === 5
-                ? parse('23:59', 'HH:mm', currentDate)
-                : programEnd,
-          });
-        }) as Program;
-
-        setProgram(currentProgram);
-      } catch (error) {
-        setProgram({
-          title: 'Programação Musical Automática',
-          announcer: 'Programação',
-          start: '00:00',
-          end: '05:00',
-        });
-      }
+      setProgram(currentProgram);
     })();
   }, []);
 
