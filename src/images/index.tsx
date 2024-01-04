@@ -4,3 +4,4 @@ export * from './Facebook';
 export * from './Instagram';
 export * from './Youtube';
 export * from './Whatsapp';
+export * from './Radio';

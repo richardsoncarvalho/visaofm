@@ -1,14 +1,17 @@
 import React from 'react';
 
-import {Player} from './src/screens/Player';
 import {TrackPlayerProvider} from './src/context/TrackPlayerContext';
 import {StatusBar} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {MainStack} from './src/routes/MainStack';
 
 export default function App() {
   return (
-    <TrackPlayerProvider>
-      <StatusBar backgroundColor="#01012A" barStyle="light-content" />
-      <Player />
-    </TrackPlayerProvider>
+    <NavigationContainer>
+      <TrackPlayerProvider>
+        <StatusBar backgroundColor="#01012A" barStyle="light-content" />
+        <MainStack />
+      </TrackPlayerProvider>
+    </NavigationContainer>
   );
 }

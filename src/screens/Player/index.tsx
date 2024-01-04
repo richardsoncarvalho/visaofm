@@ -3,7 +3,6 @@ import {SafeAreaView, View} from 'react-native';
 import {
   SocialMedia,
   HeaderProgram,
-  LargeBanner,
   PlayerAndPauseButton,
 } from '../../components';
 import styled from './style';
@@ -13,11 +12,7 @@ export function Player() {
     <SafeAreaView style={styled.container}>
       <View style={styled.wrapper}>
         <HeaderProgram />
-
-        <LargeBanner />
-
         <SocialMedia />
-
         <PlayerAndPauseButton />
       </View>
     </SafeAreaView>
