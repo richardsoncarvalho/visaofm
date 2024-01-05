@@ -1,6 +1,5 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
-import {ptBR} from 'date-fns/locale';
 
 import styled from './style';
 import {NewsItem} from '../../components/NewsItem';
@@ -26,9 +25,7 @@ export function Newslatter() {
           <NewsItem
             title={item.title.rendered}
             feature={item.yoast_head_json.og_image[0].url}
-            published_at={format(new Date(item.date), "dd 'de' MMMM", {
-              locale: ptBR,
-            })}
+            published_at={format(new Date(item.date), "dd 'de' MMMM")}
             listeningTime={
               item.yoast_head_json.twitter_misc['Est. tempo de leitura']
             }
