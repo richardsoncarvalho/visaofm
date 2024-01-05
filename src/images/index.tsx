@@ -5,3 +5,4 @@ export * from './Instagram';
 export * from './Youtube';
 export * from './Whatsapp';
 export * from './Radio';
+export * from './News';

@@ -60,9 +60,9 @@ export function MyBottomBar({state, descriptors, navigation}) {
                 alignItems: 'center',
                 paddingVertical: 10,
               }}>
-              <Icon size={24} color={isFocused ? '#f1f1f1' : '#222'} />
+              <Icon size={24} color={isFocused ? '#effd29' : '#f1f1f1'} />
 
-              <Text style={{color: isFocused ? '#f1f1f1' : '#222'}}>
+              <Text style={{color: isFocused ? '#effd29' : '#f1f1f1'}}>
                 {label}
               </Text>
             </TouchableOpacity>
