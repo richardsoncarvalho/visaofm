@@ -1,5 +1,6 @@
 import React from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, View, useColorScheme} from 'react-native';
+import {ptBR} from 'date-fns/locale';
 
 import styled from './style';
 import {NewsItem} from '../../components/NewsItem';
@@ -8,6 +9,7 @@ import {News} from '../../models/News';
 import {format} from 'date-fns';
 
 export function Newslatter() {
+  const theme = useColorScheme();
   const {data} = useQuery<News[]>({
     queryKey: ['vilsonNunesNewslatter'],
     queryFn: async () =>
@@ -17,7 +19,11 @@ export function Newslatter() {
   });
 
   return (
-    <View style={styled.wrapper}>
+    <View
+      style={[
+        styled.wrapper,
+        theme === 'dark' ? styled.bgDark : styled.bgWhite,
+      ]}>
       <FlatList
         data={data}
         keyExtractor={item => item.id.toString()}
@@ -25,7 +31,9 @@ export function Newslatter() {
           <NewsItem
             title={item.title.rendered}
             feature={item.yoast_head_json.og_image[0].url}
-            published_at={format(new Date(item.date), "dd 'de' MMMM")}
+            published_at={format(new Date(item.date), "dd 'de' MMMM", {
+              locale: ptBR,
+            })}
             listeningTime={
               item.yoast_head_json.twitter_misc['Est. tempo de leitura']
             }

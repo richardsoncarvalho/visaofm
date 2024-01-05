@@ -1,5 +1,11 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  useColorScheme,
+} from 'react-native';
 import {useRedirect} from '../../hooks/useRedirect';
 
 type NewsItemProps = {
@@ -18,6 +24,8 @@ export function NewsItem({
   link,
 }: NewsItemProps) {
   const {redirectFromLink} = useRedirect();
+  const theme = useColorScheme();
+
   return (
     <TouchableOpacity
       onPress={() => redirectFromLink(link)}
@@ -25,7 +33,7 @@ export function NewsItem({
       style={{
         flexDirection: 'row',
         gap: 10,
-        backgroundColor: '#fff',
+        backgroundColor: theme === 'dark' ? '#202020' : '#fff',
         padding: 10,
         borderRadius: 10,
       }}>

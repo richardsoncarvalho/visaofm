@@ -80,8 +80,8 @@ android {
         applicationId "com.visaofm"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4194333
-        versionName "2.5.2"
+        versionCode 4194334
+        versionName "2.5.3"
     }
     signingConfigs {
         debug {
@@ -110,6 +110,11 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
+        }
+    }
+    bundle {
+        language {
+            enableSplit false
         }
     }
 }
