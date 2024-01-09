@@ -37,7 +37,7 @@ export function Newslatter() {
 
         {isLoading ? (
           <>
-            <Text>Carregando notícias...</Text>
+            <Text style={{color: '#333'}}>Carregando notícias...</Text>
             <ActivityIndicator size={32} />
           </>
         ) : null}
