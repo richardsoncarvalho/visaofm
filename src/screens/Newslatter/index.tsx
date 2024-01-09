@@ -72,8 +72,7 @@ export function Newslatter() {
             style={{
               width: '100%',
               height: 1,
-              backgroundColor: '#f5f4f4',
-              marginVertical: 10,
+              marginVertical: 5,
             }}
           />
         )}

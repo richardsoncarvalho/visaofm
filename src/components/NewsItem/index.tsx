@@ -48,9 +48,20 @@ export function NewsItem({
       </View>
 
       <View style={{flex: 1, gap: 10}}>
-        <Text style={{fontSize: 16, fontWeight: '500'}}>{title}</Text>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: '500',
+            color: theme === 'dark' ? '#fff' : '#202020',
+          }}>
+          {title}
+        </Text>
 
-        <Text style={{fontSize: 12}}>
+        <Text
+          style={{
+            fontSize: 12,
+            color: theme === 'dark' ? '#bdbdbd' : '#5e5e5e',
+          }}>
           {published_at} - {listeningTime}
         </Text>
       </View>
