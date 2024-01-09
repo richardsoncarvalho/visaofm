@@ -65,6 +65,7 @@ export function Newslatter() {
               item.yoast_head_json.twitter_misc['Est. tempo de leitura']
             }
             link={item.link}
+            og_description={item.yoast_head_json.og_description}
           />
         )}
         ItemSeparatorComponent={() => (

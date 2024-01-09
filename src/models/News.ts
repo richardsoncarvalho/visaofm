@@ -8,6 +8,7 @@ type OgImage = {
 
 type YoastHeadJson = {
   title: string;
+  og_description: string;
   og_image: OgImage[];
   twitter_misc: TwitterMisc;
 };
