@@ -1,5 +1,8 @@
 {
   "name": "visaofm",
   "slug": "visaofm",
-  "displayName": "Visão 87 FM"
+  "displayName": "Visão 87 FM",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-9221395337754411~9776579480"
+  }
 }

@@ -1,35 +1,41 @@
 import {useCallback, useEffect, useState} from 'react';
-import {useInterstitialAd} from '@react-native-admob/admob';
-import {isEmpty} from 'lodash';
+import {TestIds, useInterstitialAd} from 'react-native-google-mobile-ads';
+import _ from 'lodash';
 import {Linking} from 'react-native';
 
+const adUnitId = __DEV__
+  ? TestIds.INTERSTITIAL
+  : 'ca-app-pub-9221395337754411/2341171116';
+
 export function useRedirect() {
-  const {adLoaded, adDismissed, show} = useInterstitialAd(
-    'ca-app-pub-9221395337754411/2341171116',
-  );
+  const {isLoaded, isClosed, load, show} = useInterstitialAd(adUnitId, {
+    requestNonPersonalizedAdsOnly: true,
+  });
   const [url, setUrl] = useState<string | null>(null);
 
   const redirectFromLink = useCallback(
     async (link: string) => {
-      if (adLoaded) {
+      if (isLoaded) {
         show();
         setUrl(link);
         return;
       }
-
       await Linking.openURL(link);
+      load();
     },
-    [adLoaded, show],
+    [isLoaded, show, load],
   );
 
   useEffect(() => {
-    (async () => {
-      if (adDismissed && !isEmpty(url)) {
-        await Linking.openURL(url as string);
-        setUrl(null);
-      }
-    })();
-  }, [adDismissed, url]);
+    if (!_.isEmpty(url) && isClosed) {
+      Linking.openURL(url);
+      setUrl(null);
+    }
+  }, [url, isClosed]);
+
+  useEffect(() => {
+    load();
+  }, [load]);
 
   return {redirectFromLink};
 }

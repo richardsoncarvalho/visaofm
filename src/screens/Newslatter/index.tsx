@@ -1,5 +1,12 @@
 import React from 'react';
-import {FlatList, View, useColorScheme} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Text,
+  View,
+  useColorScheme,
+} from 'react-native';
 import {ptBR} from 'date-fns/locale';
 
 import styled from './style';
@@ -7,16 +14,36 @@ import {NewsItem} from '../../components/NewsItem';
 import {useQuery} from 'react-query';
 import {News} from '../../models/News';
 import {format} from 'date-fns';
+import _ from 'lodash';
 
 export function Newslatter() {
   const theme = useColorScheme();
-  const {data} = useQuery<News[]>({
+  const {data, isLoading, error} = useQuery<News[]>({
     queryKey: ['vilsonNunesNewslatter'],
     queryFn: async () =>
       await fetch(
         'https://vilsonnunes.com.br/wp-json/wp/v2/posts?per_page=30',
       ).then(response => response.json()),
   });
+
+  if (_.isEmpty(data)) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Image
+          source={{uri: 'https://visao87fm.com.br/src/img/logo.png'}}
+          style={{width: 160, height: 160, marginBottom: 20}}
+          resizeMode="contain"
+        />
+
+        {isLoading ? (
+          <>
+            <Text>Carregando notícias...</Text>
+            <ActivityIndicator size={32} />
+          </>
+        ) : null}
+      </View>
+    );
+  }
 
   return (
     <View
