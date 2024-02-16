@@ -20,7 +20,6 @@ export function HeaderProgram() {
       </View>
 
       <View style={styled.wrapperContent}>
-        <Text style={styled.onAir}>Ao Vivo</Text>
         <Text style={styled.title}>{program?.title}</Text>
         <Text style={styled.subtitle}>{program?.announcer}</Text>
         <Text style={styled.subtitle}>

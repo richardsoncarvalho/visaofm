@@ -15,10 +15,12 @@ import {useQuery} from 'react-query';
 import {News} from '../../models/News';
 import {format} from 'date-fns';
 import _ from 'lodash';
+import {LargeBanner} from '../../components';
+import {BannerAdSize} from 'react-native-google-mobile-ads';
 
 export function Newslatter() {
   const theme = useColorScheme();
-  const {data, isLoading, error} = useQuery<News[]>({
+  const {data, isLoading} = useQuery<News[]>({
     queryKey: ['vilsonNunesNewslatter'],
     queryFn: async () =>
       await fetch(
@@ -26,58 +28,54 @@ export function Newslatter() {
       ).then(response => response.json()),
   });
 
-  if (_.isEmpty(data)) {
+  if (isLoading) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Image
-          source={{uri: 'https://visao87fm.com.br/src/img/logo.png'}}
-          style={{width: 160, height: 160, marginBottom: 20}}
-          resizeMode="contain"
+        <LargeBanner
+          adUnitId="ca-app-pub-9221395337754411/3414889372"
+          bannerSize={BannerAdSize.MEDIUM_RECTANGLE}
         />
 
-        {isLoading ? (
-          <>
-            <Text style={{color: '#333'}}>Carregando notícias...</Text>
-            <ActivityIndicator size={32} />
-          </>
-        ) : null}
+        <Text style={{color: '#333', marginVertical: 20}}>
+          Carregando notícias...
+        </Text>
+        
+        <ActivityIndicator size={32} />
       </View>
     );
   }
 
   return (
-    <View
+    <FlatList
       style={[
         styled.wrapper,
         theme === 'dark' ? styled.bgDark : styled.bgWhite,
-      ]}>
-      <FlatList
-        data={data}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <NewsItem
-            title={item.title.rendered}
-            feature={item.yoast_head_json.og_image[0].url}
-            published_at={format(new Date(item.date), "dd 'de' MMMM", {
-              locale: ptBR,
-            })}
-            listeningTime={
-              item.yoast_head_json.twitter_misc['Est. tempo de leitura']
-            }
-            link={item.link}
-            og_description={item.yoast_head_json.og_description}
-          />
-        )}
-        ItemSeparatorComponent={() => (
-          <View
-            style={{
-              width: '100%',
-              height: 1,
-              marginVertical: 5,
-            }}
-          />
-        )}
-      />
-    </View>
+      ]}
+      data={data}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({item}) => (
+        <NewsItem
+          title={item.title.rendered}
+          feature={item.yoast_head_json.og_image[0].url}
+          published_at={format(new Date(item.date), "dd 'de' MMMM", {
+            locale: ptBR,
+          })}
+          listeningTime={
+            item.yoast_head_json.twitter_misc['Est. tempo de leitura']
+          }
+          link={item.link}
+          og_description={item.yoast_head_json.og_description}
+        />
+      )}
+      ItemSeparatorComponent={() => (
+        <View
+          style={{
+            width: '100%',
+            height: 1,
+            marginVertical: 5,
+          }}
+        />
+      )}
+    />
   );
 }

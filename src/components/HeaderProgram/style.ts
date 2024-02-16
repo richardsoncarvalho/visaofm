@@ -5,7 +5,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginBottom: 30,
+    marginBottom: 15,
   },
   onAir: {
     fontSize: 18,

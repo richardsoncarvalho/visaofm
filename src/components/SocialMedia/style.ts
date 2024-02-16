@@ -4,7 +4,7 @@ export default StyleSheet.create({
   wrapperSocialMedia: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingBottom: 20,
+    paddingVertical: 10,
   },
   buttonSocial: {
     alignItems: 'center',
