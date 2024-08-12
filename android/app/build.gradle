@@ -81,8 +81,8 @@ android {
         applicationId "com.visaofm"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4194335
-        versionName "2.5.4"
+        versionCode 4194337
+        versionName "2.5.5"
     }
     signingConfigs {
         debug {
